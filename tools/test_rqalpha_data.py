@@ -85,8 +85,6 @@ def get_holdings(context):
     return holdings
 def handle_bar(context, bar_dict):
     print("*" * 8, "hadle_bar", "*" * 8)
-
-    # TODO: 开始编写你的算法吧！
     # IF88_future = instruments("IF88")
     now_date = context.now.strftime('%Y-%m-%d')
     try:
