@@ -18,5 +18,8 @@ if __name__ == '__main__':
     # # 修改test文件夹下的lncap_and_industry中的数据格式，及文件名格式，并将新的文件添加至data/lncap_and_industry文件夹下
     # mdt.modify_lncap_and_industry()
 
-    # 统一index_weight下的各个指数权重文件的列名
-    mdt.unify_columns_in_index_weight()
+    # # 统一index_weight下的各个指数权重文件的列名
+    # mdt.unify_columns_in_index_weight()
+
+    # # 统计行业平均收益率
+    # mdt.stat_ret_by_inds()

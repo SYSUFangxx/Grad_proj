@@ -6,8 +6,10 @@ def change_code_format_to_long(stocks):
     stocks = [s.replace('SZ', 'XSHE') for s in stocks]
     return stocks
 
+
 def init(context):
     pass
+
 
 def handle_bar(context, bar_dict):
     pr_codes = ['600519.SH', '000858.SZ', '002304.SZ', '002415.SZ', '002236.SZ',

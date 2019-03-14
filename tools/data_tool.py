@@ -159,7 +159,7 @@ class MyDataTool:
             for ind, row in df.iterrows():
                 cnt = 0
                 for c in cols:
-                    if c == 'code' or c == 'lncap':
+                    if c == 'code' or c == 'lncap' or c == 'MKT_CAP_ARD':
                         continue
                     cnt += row[c]
 
@@ -208,3 +208,22 @@ class MyDataTool:
                 df.columns = new_cols
                 df.to_csv(os.path.join(new_root, ir, p), index=False)
                 print(ir, p)
+
+    def stat_ret_by_inds(self):
+        ret_df = pd.read_csv('../data/ret/ret_weekly.csv', index_col=0, encoding='gbk')
+        ret_df.columns = self.transform_code_format(ret_df.columns)
+        dict_res = {}
+        for d, row in ret_df.iterrows():
+            x_df = pd.read_csv('../data/lncap_and_industry/%s.csv' % d, index_col=0, encoding='gbk')
+            x_df.index = x_df['code']
+            try:
+                x_df = x_df.drop(['code', 'lncap', 'MKT_CAP_ARD'], axis=1)
+            except:
+                x_df = x_df.drop(['code', 'lncap'], axis=1)
+            ret_ind = (x_df.T * row).T
+            dict_res[d] = ret_ind.apply(lambda x: x.fillna(0).sum() / x.dropna().size)
+            print(d)
+
+        res_df = pd.DataFrame(dict_res).T
+        print(res_df)
+        res_df.to_csv('../data/ret/ret_industry.csv')

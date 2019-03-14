@@ -6,7 +6,7 @@ e_date = "2018-01-01"
 # e_date = "2019-01-01"
 benchmark = "000300.XSHG"
 
-strategy_path = "../src/hedging_trade_by_rqalpha.py"
+strategy_path = "../src/other_po.py"
 config = {
     "base":
     {
@@ -14,8 +14,7 @@ config = {
         "end_date": e_date,
         "benchmark": benchmark,
         "accounts": {
-            "stock": 50000000,
-            "future": 50000000
+            "stock": 50000000
         }
     },
     "mod":
@@ -31,4 +30,3 @@ config = {
 }
 
 run_file(strategy_path, config)
-

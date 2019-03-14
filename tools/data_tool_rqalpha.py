@@ -16,10 +16,13 @@ def handle_bar(context, bar_dict):
     # # 更新交易日序列，st_date为起始日期，end_date为结束日期
     # update_trading_dates(st_date, end_date)
 
-    # 更新周收益率
-    mdt = MyRQDataTool()
-    codes = mdt.get_all_a_stock_one_date(end_date)['order_book_id'].tolist()
-    mdt.get_ret_weekly(st_date, end_date, codes)
+    # 更新test_date
+    update_test_dates()
+
+    # # 更新周收益率
+    # mdt = MyRQDataTool()
+    # codes = mdt.get_all_a_stock_one_date(end_date)['order_book_id'].tolist()
+    # mdt.get_ret_weekly(st_date, end_date, codes)
 
     # # # 测试MyTimeTool类
     # mtt = MyRQTimeTool()
@@ -34,12 +37,25 @@ def handle_bar(context, bar_dict):
     #     d = mtt.get_next_trading_date(d)
     # print("End...")
 
+
+def update_test_dates(e_date='2019-01-01'):
+    file = "../data/dates/test_date.csv"
+    date_df = pd.read_csv(file, index_col=0)
+    test_dates = date_df['date'].tolist()
+    mtt = MyRQTimeTool()
+    while test_dates[-1] <= e_date:
+        test_dates.append(mtt.get_next_last_day(test_dates[-1]))
+    res_df = pd.DataFrame({'date': test_dates})
+    res_df.to_csv(file)
+
+
 def update_trading_dates(s_date, e_date):
     res_path = "../data/dates/trading_days.txt"
     mtt = MyRQTimeTool()
     tds = mtt.get_trading_dates_str(s_date, e_date)
     with open(res_path, 'w') as file:
         file.writelines(str(tds))
+
 
 class MyRQTimeTool:
     def __init__(self):
